@@ -147,9 +147,11 @@ function EventCard() {
             {event.delivery.city}
             <br />
             CEP {event.delivery.cep}
+            <br />
+            CPF {event.delivery.cpf}
           </p>
           <p mix={eventNote}>
-            Se a loja pedir CPF,{' '}
+            Qualquer dúvida,{' '}
             <a href={event.pix.whatsappUrl} target="_blank" rel="noreferrer">
               fale com a gente no WhatsApp
             </a>

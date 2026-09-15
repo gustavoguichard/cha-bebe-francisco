@@ -167,6 +167,22 @@ export default createController(routes, {
       return render(<OgCard />)
     },
 
+    async removerReserva({ get, params }) {
+      if (params.chave !== event.adminKey) return new Response('Not Found', { status: 404 })
+      let db = get(databaseContext)
+      let claim = await db.findOne(claims, { where: { id: params.id } })
+      if (claim) await db.delete(claims, claim.id)
+      return redirect(routes.admin.href({ chave: params.chave }), 303)
+    },
+
+    async removerPresenca({ get, params }) {
+      if (params.chave !== event.adminKey) return new Response('Not Found', { status: 404 })
+      let db = get(databaseContext)
+      let rsvp = await db.findOne(rsvps, { where: { id: params.id } })
+      if (rsvp) await db.delete(rsvps, rsvp.id)
+      return redirect(routes.admin.href({ chave: params.chave }), 303)
+    },
+
     async admin({ get, params, render }) {
       if (params.chave !== event.adminKey) {
         return new Response('Not Found', { status: 404 })
@@ -175,7 +191,7 @@ export default createController(routes, {
       let db = get(databaseContext)
       let statuses = await loadGiftStatuses(db)
       let allRsvps = await db.findMany(rsvps, { orderBy: ['created_at', 'asc'] })
-      return render(<AdminPage statuses={statuses} rsvps={allRsvps} />)
+      return render(<AdminPage statuses={statuses} rsvps={allRsvps} chave={params.chave} />)
     },
   },
 })

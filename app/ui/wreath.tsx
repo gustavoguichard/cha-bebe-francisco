@@ -110,7 +110,7 @@ export function Wreath(handle: Handle<{ children?: RemixNode }>) {
       })}
     >
       <svg
-        viewBox="-210 -210 420 420"
+        viewBox="-236 -236 472 472"
         aria-hidden="true"
         mix={css({ position: 'absolute', inset: 0, width: '100%', height: '100%' })}
       >

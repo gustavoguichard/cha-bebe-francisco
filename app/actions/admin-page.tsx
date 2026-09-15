@@ -2,6 +2,7 @@ import type { Handle } from 'remix/ui'
 import { css } from 'remix/ui'
 
 import { firstName, formatQuantity, type GiftStatus } from '../data/claims.ts'
+import { routes } from '../routes.ts'
 import type { Rsvp } from '../data/schema.ts'
 import { font } from '../ui/theme.ts'
 import { Document } from './document.tsx'
@@ -9,11 +10,16 @@ import { Document } from './document.tsx'
 export interface AdminPageProps {
   statuses: GiftStatus[]
   rsvps: Rsvp[]
+  chave: string
+}
+
+function plural(count: number, one: string, many: string) {
+  return `${count} ${count === 1 ? one : many}`
 }
 
 export function AdminPage(handle: Handle<AdminPageProps>) {
   return () => {
-    let { statuses, rsvps } = handle.props
+    let { statuses, rsvps, chave } = handle.props
     let adults = rsvps.reduce((sum, rsvp) => sum + rsvp.adults, 0)
     let children = rsvps.reduce((sum, rsvp) => sum + rsvp.children, 0)
     let claimed = statuses.filter((status) => status.claims.length > 0)
@@ -30,7 +36,8 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
           <section mix={section}>
             <h2 mix={heading}>Presença</h2>
             <p mix={muted}>
-              {rsvps.length} confirmações, {adults} adultos e {children} crianças.
+              {plural(rsvps.length, 'confirmação', 'confirmações')}, {plural(adults, 'adulto', 'adultos')} e{' '}
+              {plural(children, 'criança', 'crianças')}.
             </p>
             <table mix={table}>
               <thead>
@@ -39,6 +46,7 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
                   <th>Adultos</th>
                   <th>Crianças</th>
                   <th>Recado</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -48,6 +56,13 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
                     <td>{rsvp.adults}</td>
                     <td>{rsvp.children}</td>
                     <td>{rsvp.message ?? ''}</td>
+                    <td>
+                      <form method="post" action={routes.removerPresenca.href({ chave, id: rsvp.id })}>
+                        <button type="submit" mix={removeButton}>
+                          remover
+                        </button>
+                      </form>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -57,7 +72,7 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
           <section mix={section}>
             <h2 mix={heading}>Presentes</h2>
             <p mix={muted}>
-              {claimed.length} de {statuses.length} itens já têm alguém.
+              {claimed.length} de {statuses.length} itens já {claimed.length === 1 ? 'tem' : 'têm'} alguém.
             </p>
             <table mix={table}>
               <thead>
@@ -72,11 +87,24 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
                   <tr key={status.gift.slug}>
                     <td>{status.gift.name}</td>
                     <td>
-                      {status.claims.length === 0
-                        ? '—'
-                        : status.claims
-                            .map((claim) => `${claim.name} (${formatQuantity(status.gift, claim.quantity)})`)
-                            .join(', ')}
+                      {status.claims.length === 0 ? (
+                        '—'
+                      ) : (
+                        <ul mix={claimList}>
+                          {status.claims.map((claim) => (
+                            <li key={claim.id} mix={claimItem}>
+                              <span>
+                                {claim.name} ({formatQuantity(status.gift, claim.quantity)})
+                              </span>
+                              <form method="post" action={routes.removerReserva.href({ chave, id: claim.id })}>
+                                <button type="submit" mix={removeButton}>
+                                  remover
+                                </button>
+                              </form>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </td>
                     <td>{status.remaining}</td>
                   </tr>
@@ -112,7 +140,7 @@ function buildSummary(statuses: GiftStatus[], rsvps: Rsvp[]) {
   }
   lines.push('', 'Presença', '')
   for (let rsvp of rsvps) {
-    lines.push(`- ${rsvp.name}: ${rsvp.adults} adultos, ${rsvp.children} crianças`)
+    lines.push(`- ${rsvp.name}: ${plural(rsvp.adults, 'adulto', 'adultos')}, ${plural(rsvp.children, 'criança', 'crianças')}`)
   }
   return lines.join('\n')
 }
@@ -128,6 +156,23 @@ const section = css({ marginTop: '40px', display: 'flex', flexDirection: 'column
 const heading = css({ fontSize: '26px', fontStyle: 'italic', color: 'var(--olive)' })
 
 const muted = css({ color: 'var(--ink-soft)' })
+
+const claimList = css({ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '4px' })
+
+const claimItem = css({ display: 'flex', alignItems: 'baseline', gap: '10px', flexWrap: 'wrap' })
+
+const removeButton = css({
+  background: 'none',
+  border: 0,
+  padding: 0,
+  fontStyle: 'italic',
+  fontSize: '15px',
+  color: 'var(--clay)',
+  cursor: 'pointer',
+  textDecoration: 'underline',
+  textUnderlineOffset: '3px',
+  textDecorationColor: 'var(--line)',
+})
 
 const table = css({
   width: '100%',
