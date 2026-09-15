@@ -9,8 +9,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "maxDuration": 30,
-      "includeFiles": "{dist,db/migrations}/**"
+      "maxDuration": 30
     }
   }
 }

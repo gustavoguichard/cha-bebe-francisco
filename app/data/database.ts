@@ -1,6 +1,6 @@
 import * as path from 'node:path'
 import type { Database } from 'remix/data-table'
-import { loadMigrations } from 'remix/data-table/migrations/node'
+import { migrations } from './migrations.ts'
 
 const rootDir = path.resolve(import.meta.dirname, '../..').replace(/[\\/]dist$/, '')
 
@@ -13,7 +13,6 @@ export function getDb(): Promise<Database> {
 
 async function createDatabase(): Promise<Database> {
   let db = await openDatabase()
-  let migrations = await loadMigrations(path.join(rootDir, 'db', 'migrations'))
   await db.migrate(migrations)
   return db
 }

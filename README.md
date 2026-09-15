@@ -18,7 +18,7 @@ Abre em http://localhost:44100. Não há nada para configurar: os dados ficam em
 - `app/data/gifts.ts` é a lista de presentes: nome, descrição, quantidade, links e foto. Edite aqui para mudar a lista.
 - `app/data/event.ts` guarda data, horário e endereço da festa.
 - `public/products/` tem as fotos dos produtos.
-- `db/migrations/` cria as tabelas de escolhas (`claims`) e presenças (`rsvps`).
+- `app/data/migrations.ts` cria as tabelas de escolhas (`claims`) e presenças (`rsvps`).
 - `app/actions/controller.tsx` implementa as rotas: página inicial, reservar presente, desfazer, confirmar presença e bastidores.
 
 ## Bastidores

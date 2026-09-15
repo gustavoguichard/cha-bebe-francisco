@@ -1,3 +1,10 @@
+import type { MigrationDescriptor } from 'remix/data-table/migrations'
+
+export const migrations: MigrationDescriptor[] = [
+  {
+    id: '20260914120000',
+    name: 'create_claims_and_rsvps',
+    up: `
 create table claims (
   id text primary key,
   item_slug text not null,
@@ -16,3 +23,10 @@ create table rsvps (
   message text,
   created_at text not null
 );
+`,
+    down: `
+drop table if exists rsvps;
+drop table if exists claims;
+`,
+  },
+]
