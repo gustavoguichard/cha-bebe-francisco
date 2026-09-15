@@ -276,7 +276,7 @@ function GiftRow(
                 {remaining > 1 ? (
                   <label mix={field}>
                     <span>Quantos</span>
-                    <select name="quantity" mix={input}>
+                    <select name="quantity" mix={[input, select]}>
                       {Array.from({ length: remaining }, (_, index) => (
                         <option key={index} value={String(index + 1)}>
                           {formatQuantity(gift, index + 1)}
@@ -334,13 +334,13 @@ function RsvpForm(handle: Handle<{ rsvp: Rsvp | null; notice?: string; error?: s
           <div mix={fieldRow}>
             <label mix={field}>
               <span>Adultos</span>
-              <select name="adults" mix={input}>
+              <select name="adults" mix={[input, select]}>
                 {countOptions(1, 8, rsvp?.adults ?? 1)}
               </select>
             </label>
             <label mix={field}>
               <span>Crianças</span>
-              <select name="children" mix={input}>
+              <select name="children" mix={[input, select]}>
                 {countOptions(0, 8, rsvp?.children ?? 0)}
               </select>
             </label>
@@ -715,6 +715,19 @@ const input = css({
 })
 
 const textarea = css({ resize: 'vertical', minHeight: '84px', lineHeight: 1.5 })
+
+const select = css({
+  appearance: 'none',
+  WebkitAppearance: 'none',
+  paddingRight: '40px',
+  cursor: 'pointer',
+  backgroundColor: '#fff',
+  backgroundImage:
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%234F5B3B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'right 14px center',
+  backgroundSize: '12px',
+})
 
 const button = css({
   alignSelf: 'flex-start',
