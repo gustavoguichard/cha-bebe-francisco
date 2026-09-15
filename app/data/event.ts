@@ -4,7 +4,8 @@ export const event = {
   date: new Date('2026-09-19T00:00:00-03:00'),
   dateLabel: '19 de setembro',
   weekdayLabel: 'sábado',
-  time: process.env.EVENT_TIME || '16h30',
+  time: '16h30',
+  adminKey: 'bastidores-do-chico',
   venue: {
     name: 'Povo em Pé',
     address: 'Av. Beira Rio, 1135',

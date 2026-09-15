@@ -7,6 +7,7 @@ import { createController } from 'remix/router'
 import { Session } from 'remix/session'
 
 import { countTaken, firstName, loadGiftStatuses } from '../data/claims.ts'
+import { event } from '../data/event.ts'
 import { findGift } from '../data/gifts.ts'
 import { claims, rsvps } from '../data/schema.ts'
 import { databaseContext } from '../middleware/database.ts'
@@ -167,8 +168,7 @@ export default createController(routes, {
     },
 
     async admin({ get, url, render }) {
-      let key = process.env.ADMIN_KEY
-      if (!key || url.searchParams.get('chave') !== key) {
+      if (url.searchParams.get('chave') !== event.adminKey) {
         return new Response('Not Found', { status: 404 })
       }
 

@@ -8,11 +8,10 @@ Construído com [Remix 3](https://remix.run), renderizado no servidor, sem JavaS
 
 ```sh
 npm install
-cp .env.example .env
 npm run dev
 ```
 
-Abre em http://localhost:44100. Sem `DATABASE_URL`, os dados ficam em `db/app.sqlite`.
+Abre em http://localhost:44100. Não há nada para configurar: os dados ficam em `db/app.sqlite`.
 
 ## Onde as coisas moram
 
@@ -24,23 +23,17 @@ Abre em http://localhost:44100. Sem `DATABASE_URL`, os dados ficam em `db/app.sq
 
 ## Bastidores
 
-`/admin?chave=SUA_ADMIN_KEY` mostra quem escolheu o quê e quem confirmou presença, com um resumo pronto para copiar.
+`/admin?chave=bastidores-do-chico` mostra quem escolheu o quê e quem confirmou presença, com um resumo pronto para copiar.
 
 ## Variáveis de ambiente
 
-| Nome             | Para quê                                                       |
-| ---------------- | -------------------------------------------------------------- |
-| `SESSION_SECRET` | Assina o cookie que lembra quais escolhas são do visitante.    |
-| `ADMIN_KEY`      | Chave da página de bastidores.                                 |
-| `DATABASE_URL`   | Postgres em produção (Neon). Vazio usa SQLite local.           |
-| `EVENT_TIME`     | Horário da festa, opcional, ex.: `15h`.                        |
+A única variável é `DATABASE_URL`, injetada pelo Neon na Vercel. Localmente o app usa SQLite em `db/app.sqlite`, sem nada para configurar.
 
 ## Deploy na Vercel
 
 1. Crie o projeto na Vercel a partir deste repositório. O `vercel.json` já aponta tudo para a função em `api/index.js`.
 2. Em Storage, adicione um banco Neon Postgres (plano gratuito). Ele injeta `DATABASE_URL` sozinho.
-3. Em Environment Variables, defina `SESSION_SECRET` e `ADMIN_KEY`.
-4. Faça o deploy. As migrações rodam na primeira requisição.
+3. Faça o deploy. As migrações rodam na primeira requisição.
 
 ## Outras hospedagens
 
