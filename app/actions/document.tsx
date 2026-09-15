@@ -30,6 +30,8 @@ const baseStyles = `
   }
   * { box-sizing: border-box; }
   html { background: var(--paper); }
+  html:focus-within { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html:focus-within { scroll-behavior: auto; } }
   body {
     margin: 0;
     background: var(--paper);
