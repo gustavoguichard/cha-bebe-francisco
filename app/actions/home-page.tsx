@@ -78,7 +78,7 @@ export function HomePage(handle: Handle<HomePageProps>) {
           </section>
           <footer mix={footer}>
             <Rainbow />
-            <p>Com amor, a família do Francisco.</p>
+            <p>Com amor, Gabi e Ana.</p>
           </footer>
         </main>
       </Document>
@@ -133,9 +133,68 @@ function EventCard() {
           </a>
         </p>
       </div>
+      <div mix={eventRow}>
+        <div mix={eventCol}>
+          <p mix={eventLabel}>Entregas</p>
+          <p mix={eventText}>Comprou online? Pode mandar direto para a casa do Francisco:</p>
+          <p mix={eventAddress}>
+            {event.delivery.name}
+            <br />
+            {event.delivery.street}
+            <br />
+            {event.delivery.neighborhood}
+            <br />
+            {event.delivery.city}
+            <br />
+            CEP {event.delivery.cep}
+          </p>
+          <p mix={eventNote}>Se a loja pedir CPF, fale com a gente.</p>
+        </div>
+        <div mix={eventCol}>
+          <p mix={eventLabel}>Pix</p>
+          <p mix={eventText}>Prefere dar um Pix? A chave é o celular da Ana:</p>
+          <p mix={pixKey}>
+            <span mix={pixKeyValue}>{event.pix.keyLabel}</span>
+            <button type="button" data-copy={event.pix.key} mix={copyButton}>
+              Copiar chave
+            </button>
+          </p>
+          <p mix={eventText}>{event.pix.holder}</p>
+        </div>
+      </div>
+      <script>{copyScript}</script>
     </section>
   )
 }
+
+const copyScript = `
+document.querySelectorAll('[data-copy]').forEach(function (button) {
+  button.addEventListener('click', function () {
+    var value = button.getAttribute('data-copy')
+    var label = button.textContent
+    var done = function () {
+      button.textContent = 'Copiada!'
+      setTimeout(function () { button.textContent = label }, 2000)
+    }
+    var fallback = function () {
+      var field = document.createElement('textarea')
+      field.value = value
+      field.setAttribute('readonly', '')
+      field.style.position = 'fixed'
+      field.style.opacity = '0'
+      document.body.appendChild(field)
+      field.select()
+      try { if (document.execCommand('copy')) done() } catch (error) {}
+      document.body.removeChild(field)
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(value).then(done, fallback)
+    } else {
+      fallback()
+    }
+  })
+})
+`
 
 function SectionTitle(handle: Handle<{ script: string; title: string }>) {
   return () => (
@@ -424,6 +483,39 @@ const eventLinks = css({
   gap: '6px 18px',
   marginTop: '8px',
   fontStyle: 'italic',
+})
+
+const eventRow = css({
+  gridColumn: '1 / -1',
+  paddingTop: '24px',
+  borderTop: '1px solid var(--line)',
+  display: 'grid',
+  gap: '24px',
+  '@media (min-width: 640px)': { gridTemplateColumns: '1fr 1fr' },
+})
+
+const eventAddress = css({ lineHeight: 1.5 })
+
+const eventNote = css({ fontStyle: 'italic', color: 'var(--ink-soft)', fontSize: '16px', marginTop: '4px' })
+
+const pixKey = css({ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px 14px', margin: '4px 0' })
+
+const pixKeyValue = css({
+  fontSize: '22px',
+  lineHeight: 1.25,
+  fontVariationSettings: "'wght' 500",
+})
+
+const copyButton = css({
+  cursor: 'pointer',
+  padding: '6px 14px',
+  borderRadius: '999px',
+  border: '1px solid var(--olive)',
+  background: 'transparent',
+  color: 'var(--olive)',
+  fontSize: '15px',
+  fontVariationSettings: "'wght' 500",
+  '&:hover': { background: 'var(--paper-light)' },
 })
 
 const section = css({ marginTop: '72px' })
