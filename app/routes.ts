@@ -5,6 +5,6 @@ export const routes = route({
   reservar: post('/presentes/:slug/reservar'),
   desfazer: post('/reservas/:id/desfazer'),
   confirmarPresenca: post('/confirmar-presenca'),
-  admin: get('/admin'),
+  admin: get('/admin/:chave'),
   og: get('/og'),
 })

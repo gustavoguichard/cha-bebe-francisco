@@ -167,8 +167,8 @@ export default createController(routes, {
       return render(<OgCard />)
     },
 
-    async admin({ get, url, render }) {
-      if (url.searchParams.get('chave') !== event.adminKey) {
+    async admin({ get, params, render }) {
+      if (params.chave !== event.adminKey) {
         return new Response('Not Found', { status: 404 })
       }
 
