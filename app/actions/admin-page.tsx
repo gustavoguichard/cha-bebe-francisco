@@ -87,9 +87,13 @@ export function AdminPage(handle: Handle<AdminPageProps>) {
 
           <section mix={section}>
             <h2 mix={heading}>Resumo para copiar</h2>
-            <textarea readOnly rows={16} mix={summaryBox} value={summary} />
+            <button type="button" id="copy-summary" mix={copyButton}>
+              Copiar resumo
+            </button>
+            <textarea readOnly rows={16} id="summary" mix={summaryBox} value={summary} />
           </section>
         </main>
+        <script>{copyScript}</script>
       </Document>
     )
   }
@@ -138,6 +142,19 @@ const table = css({
   '& th': { fontStyle: 'italic', fontWeight: 400, color: 'var(--ink-soft)' },
 })
 
+const copyButton = css({
+  alignSelf: 'flex-start',
+  padding: '11px 22px',
+  borderRadius: '999px',
+  border: 0,
+  background: 'var(--olive)',
+  color: 'var(--paper-light)',
+  fontSize: '17px',
+  fontVariationSettings: "'wght' 500",
+  cursor: 'pointer',
+  '&:hover': { background: 'var(--sage)' },
+})
+
 const summaryBox = css({
   width: '100%',
   padding: '14px',
@@ -148,3 +165,28 @@ const summaryBox = css({
   fontSize: '14px',
   lineHeight: 1.5,
 })
+
+const copyScript = `
+var button = document.getElementById('copy-summary');
+var box = document.getElementById('summary');
+var label = button.textContent;
+var timer;
+function done() {
+  button.textContent = 'Copiado!';
+  clearTimeout(timer);
+  timer = setTimeout(function () { button.textContent = label; }, 2000);
+}
+function fallback() {
+  box.focus();
+  box.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  done();
+}
+button.addEventListener('click', function () {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(box.value).then(done, fallback);
+  } else {
+    fallback();
+  }
+});
+`
