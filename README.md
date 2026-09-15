@@ -33,9 +33,7 @@ A única variável é `DATABASE_URL`, injetada pelo Neon na Vercel. Localmente o
 
 ## Deploy na Vercel
 
-1. Crie o projeto na Vercel a partir deste repositório. O `vercel.json` já aponta tudo para a função em `api/index.js`.
-2. Em Storage, adicione um banco Neon Postgres (plano gratuito). Ele injeta `DATABASE_URL` sozinho.
-3. Faça o deploy. As migrações rodam na primeira requisição.
+A Vercel detecta o `server.ts` sozinha e o publica como uma função, sem configuração. Basta importar o repositório, definir `DATABASE_URL` nas variáveis do projeto (o Neon gratuito serve) e fazer o deploy. As tabelas são criadas na primeira requisição.
 
 ## Outras hospedagens
 

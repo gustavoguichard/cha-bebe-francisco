@@ -6,7 +6,6 @@ App Remix 3 (`remix@3.0.0-rc`) renderizado no servidor. Consulte `./.agents/skil
 
 ```sh
 npm run dev        # servidor local com watch em http://localhost:44100
-npm run build      # compila app/ para dist/ (usado pela função da Vercel em api/index.js)
 npm run typecheck
 ```
 
