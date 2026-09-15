@@ -5,7 +5,7 @@ export const event = {
   dateLabel: '19 de setembro',
   weekdayLabel: 'sábado',
   time: '16h30',
-  adminKey: 'bastidores-do-chico',
+  adminKey: process.env.ADMIN_KEY || 'bastidores-do-chico',
   venue: {
     name: 'Povo em Pé',
     address: 'Av. Beira Rio, 1135',
@@ -25,6 +25,6 @@ export const event = {
   pix: {
     key: '48991109013',
     keyLabel: '(48) 99110-9013',
-    holder: 'Ana Laura Prass',
+    holder: 'Ana Laura Prass', whatsappUrl: 'https://wa.me/5548991109013',
   },
 }

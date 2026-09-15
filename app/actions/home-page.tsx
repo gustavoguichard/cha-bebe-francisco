@@ -78,7 +78,7 @@ export function HomePage(handle: Handle<HomePageProps>) {
           </section>
           <footer mix={footer}>
             <Rainbow />
-            <p>Com amor, Gabi e Ana.</p>
+            <p>Com amor, a família do Francisco.</p>
           </footer>
         </main>
       </Document>
@@ -148,7 +148,13 @@ function EventCard() {
             <br />
             CEP {event.delivery.cep}
           </p>
-          <p mix={eventNote}>Se a loja pedir CPF, fale com a gente.</p>
+          <p mix={eventNote}>
+            Se a loja pedir CPF,{' '}
+            <a href={event.pix.whatsappUrl} target="_blank" rel="noreferrer">
+              fale com a gente no WhatsApp
+            </a>
+            .
+          </p>
         </div>
         <div mix={eventCol}>
           <p mix={eventLabel}>Pix</p>
@@ -159,7 +165,12 @@ function EventCard() {
               Copiar chave
             </button>
           </p>
-          <p mix={eventText}>{event.pix.holder}</p>
+          <p mix={eventText}>
+            {event.pix.holder}, no{' '}
+            <a href={event.pix.whatsappUrl} target="_blank" rel="noreferrer">
+              WhatsApp
+            </a>
+          </p>
         </div>
       </div>
       <script>{copyScript}</script>
