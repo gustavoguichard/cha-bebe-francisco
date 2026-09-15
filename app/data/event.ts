@@ -21,7 +21,6 @@ export const event = {
     neighborhood: 'Vila Esperança, Praia da Ribanceira',
     city: 'Imbituba, SC',
     cep: '88780-000',
-    cpf: '038.191.129-28',
   },
   pix: {
     key: '48991109013',
