@@ -27,7 +27,7 @@ Abre em http://localhost:44100. Não há nada para configurar: os dados ficam em
 
 ## Variáveis de ambiente
 
-A única variável é `DATABASE_URL`, injetada pelo Neon na Vercel. Localmente o app usa SQLite em `db/app.sqlite`, sem nada para configurar.
+A única variável é `DATABASE_URL`, injetada pelo Neon na Vercel. Localmente o app usa SQLite em `db/app.sqlite`, sem nada para configurar. Se quiser usar o banco do Neon no lugar do SQLite, crie um arquivo `.env` na raiz com `DATABASE_URL=postgresql://...` e reinicie o servidor de desenvolvimento, pois ele só lê o arquivo ao subir — o mesmo vale sempre que você alterar o valor.
 
 ## Deploy na Vercel
 
