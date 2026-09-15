@@ -1,9 +1,15 @@
+import { createHash } from 'node:crypto'
 import { createCookie } from 'remix/cookie'
 import { session } from 'remix/middleware/session'
 import { createCookieSessionStorage } from 'remix/session-storage/cookie'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const secret = process.env.SESSION_SECRET || 'x7Qm4vL9pR2sT8wY1zB6nC3hJ5kF0dG7aE4uV8iN2oP9qS1rW6tX3yZ5bM8cH0jK'
+
+const secret =
+  process.env.SESSION_SECRET ||
+  createHash('sha256')
+    .update(`cha-do-francisco:${process.env.DATABASE_URL ?? 'sqlite-local'}`)
+    .digest('hex')
 
 export const sessionCookie = createCookie('cha_francisco', {
   secrets: [secret],

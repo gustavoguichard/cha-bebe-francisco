@@ -23,7 +23,7 @@ Abre em http://localhost:44100. Não há nada para configurar: os dados ficam em
 
 ## Bastidores
 
-O repositório é público, então a chave dos bastidores e o segredo do cookie que estão no código são conhecidos. Para ter chaves só suas, defina `ADMIN_KEY` e `SESSION_SECRET` nas variáveis da Vercel; sem elas, valem as do código.
+O repositório é público, então a chave dos bastidores que está no código é conhecida. Para ter uma chave só sua, defina `ADMIN_KEY` nas variáveis da Vercel. O segredo do cookie é derivado da `DATABASE_URL`, que não está no repositório.
 
 `/admin?chave=bastidores-do-chico` mostra quem escolheu o quê e quem confirmou presença, com um resumo pronto para copiar.
 
