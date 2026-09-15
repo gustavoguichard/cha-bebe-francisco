@@ -30,8 +30,6 @@ const baseStyles = `
   }
   * { box-sizing: border-box; }
   html { background: var(--paper); }
-  html:focus-within { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html:focus-within { scroll-behavior: auto; } }
   body {
     margin: 0;
     background: var(--paper);
@@ -51,6 +49,15 @@ const baseStyles = `
   img { max-width: 100%; }
   ::selection { background: var(--sage-soft); }
 }
+`
+
+const scrollScript = `
+window.addEventListener('load', function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  requestAnimationFrame(function () {
+    document.documentElement.style.scrollBehavior = 'smooth'
+  })
+})
 `
 
 export function Document(handle: Handle<DocumentProps>) {
@@ -80,7 +87,10 @@ export function Document(handle: Handle<DocumentProps>) {
           />
           <style>{baseStyles}</style>
         </head>
-        <body>{children}</body>
+        <body>
+          {children}
+          <script>{scrollScript}</script>
+        </body>
       </html>
     )
   }
