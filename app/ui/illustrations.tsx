@@ -114,6 +114,13 @@ const pieces: Record<string, () => () => any> = {
       <path d="M20 41h18" {...stroke} />
     </>
   ),
+  clothes: () => () => (
+    <>
+      <path d="M31 35h24v14c0 8-4 12-6 17H37c-2-5-6-9-6-17z" {...soft} />
+      <path d="M30 16c3 6 17 6 20 0l14 8-6 12-6-3v14c0 8-4 12-6 17H34c-2-5-6-9-6-17V33l-6 3-6-12z" {...stroke} />
+      <path d="M36 58h.01M40 58h.01M44 58h.01" {...stroke} />
+    </>
+  ),
   gift: () => () => (
     <>
       <rect x="18" y="32" width="44" height="32" rx="6" {...soft} />

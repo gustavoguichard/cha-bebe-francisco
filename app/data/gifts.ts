@@ -366,6 +366,18 @@ export const gifts: Gift[] = [
     image: '/products/rosquinha-amamentacao.webp',
   },
   {
+    slug: 'roupinhas-9-12-meses',
+    name: 'Roupinhas de 9 a 12 meses',
+    category: 'Enxoval',
+    description:
+      'Bodies, macacões, calças e casaquinhos para quando o Francisco já estiver engatinhando por aí.',
+    note: 'Qualquer marca ou modelo. Na etiqueta costuma ser o tamanho GG (9 a 12 meses), e peças quentinhas de algodão são muito bem-vindas.',
+    quantity: 6,
+    unit: { one: 'peça', many: 'peças' },
+    links: [],
+    illustration: 'clothes',
+  },
+  {
     slug: 'ruido-branco',
     name: 'Aparelho de ruído branco',
     category: 'Casa e sono',
